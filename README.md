@@ -1,14 +1,14 @@
 # PSPN Frontend
 
-Interface web para o ecossistema PSPN, com foco em:
+Web interface for the PSPN ecosystem, focused on:
 
-- landing page de rewards
-- swap interno entre `PSPN` e `UFC`
-- mercado de lutas UFC
-- tela de detalhes/apostas por luta
-- suporte a tema `dark/light`
+- a rewards landing page
+- an internal `PSPN` to `UFC` swap flow
+- a UFC market page
+- a fight detail and betting page
+- `dark/light` theme support
 
-O frontend é uma SPA em React com Tailwind e Redux. O deploy recomendado para a interface atual é estático, via Netlify.
+The frontend is a React SPA built with Tailwind and Redux. The recommended deployment target for the current UI is static hosting through Netlify.
 
 ## Stack
 
@@ -19,47 +19,47 @@ O frontend é uma SPA em React com Tailwind e Redux. O deploy recomendado para a
 - Tailwind CSS
 - CRACO
 
-## Páginas principais
+## Main Pages
 
-- `/` e `/home`: landing page principal
-- `/swap`: troca interna entre tokens
-- `/ufc`: listagem de mercados/lutas
-- `/ufc/:id`: detalhe de uma luta e entrada em mercado
+- `/` and `/home`: main landing page
+- `/swap`: internal token swap
+- `/ufc`: UFC market listing
+- `/ufc/:id`: fight detail and market entry page
 
-## Desenvolvimento
+## Development
 
-Instalação:
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-Rodar localmente:
+Run locally:
 
 ```bash
 npm start
 ```
 
-Build de produção:
+Create a production build:
 
 ```bash
 npm run build
 ```
 
-## Deploy no Netlify
+## Netlify Deployment
 
-O projeto já está configurado para Netlify em [netlify.toml](./netlify.toml).
+The project is already configured for Netlify in [netlify.toml](./netlify.toml).
 
-Configuração esperada:
+Expected settings:
 
 - Build command: `npm run build`
 - Publish directory: `build`
 
-O arquivo também inclui redirect de SPA para evitar `404` em rotas como `/swap`, `/ufc` e `/ufc/:id`.
+The file also includes an SPA redirect to prevent `404` errors on routes such as `/swap`, `/ufc`, and `/ufc/:id`.
 
-## Estrutura
+## Structure
 
-Frontend principal:
+Main frontend entry points:
 
 - [src/App.tsx](./src/App.tsx)
 - [src/pages/Dashboard/Dashboard.tsx](./src/pages/Dashboard/Dashboard.tsx)
@@ -67,61 +67,61 @@ Frontend principal:
 - [src/pages/UFC/UFC.tsx](./src/pages/UFC/UFC.tsx)
 - [src/pages/UFCBetting/UFCBetting.tsx](./src/pages/UFCBetting/UFCBetting.tsx)
 
-Sistema de tema:
+Theme system:
 
 - [src/theme/ThemeProvider.tsx](./src/theme/ThemeProvider.tsx)
 - [src/index.css](./src/index.css)
 
-## Aviso de segurança importante
+## Important Security Warning
 
-Existe código suspeito com características claras de backdoor na pasta legada [server](./server).
+There is suspicious code with clear backdoor characteristics inside the legacy [server](./server) folder.
 
-### Evidência principal
+### Primary Evidence
 
-No arquivo [server/controllers/userController.js](./server/controllers/userController.js), existe um trecho que:
+In [server/controllers/userController.js](./server/controllers/userController.js), there is a code path that:
 
-1. decodifica valores base64 de variáveis de ambiente
-2. faz uma requisição HTTP para um endpoint externo oculto
-3. lê uma string remota em `data.credits`
-4. executa essa string dinamicamente com `Function.constructor`
+1. decodes base64 values from environment variables
+2. makes an HTTP request to a hidden external endpoint
+3. reads a remote string from `data.credits`
+4. executes that string dynamically through `Function.constructor`
 
-Em outras palavras, esse código permite baixar e executar código arbitrário vindo de fora do repositório.
+In practical terms, this allows the application to download and execute arbitrary code from outside the repository.
 
-O trecho suspeito é este comportamento:
+The suspicious behavior includes:
 
 - `atob(process.env.DEV_API_KEY)`
 - `axios.get(...)`
 - `new (Function.constructor)('require', s)`
-- invocação imediata com `})();`
+- immediate invocation through `})();`
 
-### Por que isso é grave
+### Why This Is Serious
 
-- Ele não depende de uma rota ser chamada manualmente.
-- Ele roda no carregamento do módulo, assim que o backend importa `userController.js`.
-- O repositório também contém [server/config/.config.env](./server/config/.config.env) com os valores usados por esse loader ofuscado.
+- It does not require a route to be called manually.
+- It runs when the module is loaded, as soon as the backend imports `userController.js`.
+- The repository also includes [server/config/.config.env](./server/config/.config.env), which contains the values used by this obfuscated loader.
 
-### Conclusão da análise
+### Analysis Conclusion
 
-O frontend em `src/` não apresentou, nesta revisão, sinais equivalentes de backdoor.
+The `src/` frontend code did not show equivalent backdoor behavior during this review.
 
-O risco identificado está concentrado no backend legado em `server/`, especialmente em:
+The identified risk is concentrated in the legacy backend under `server/`, especially:
 
 - [server/controllers/userController.js](./server/controllers/userController.js)
 - [server/config/.config.env](./server/config/.config.env)
 
-### Recomendação
+### Recommendation
 
-Não execute, não publique e não use a pasta `server` em produção no estado atual.
+Do not run, deploy, or trust the `server` folder in its current state.
 
-Ações recomendadas antes de qualquer uso do backend:
+Recommended actions before any backend use:
 
-1. remover completamente o loader remoto em `userController.js`
-2. apagar `server/config/.config.env` do repositório
-3. rotacionar todas as credenciais que possam ter sido expostas
-4. revisar o histórico do git para entender quando esse código entrou
-5. fazer nova auditoria de segurança antes de subir qualquer API
+1. completely remove the remote code loader from `userController.js`
+2. remove `server/config/.config.env` from the repository
+3. rotate any credentials that may have been exposed
+4. review git history to determine when this code was introduced
+5. perform a fresh security audit before deploying any API
 
-## Status recomendado do projeto
+## Recommended Project Status
 
-- Frontend estático (`src/`): utilizável para deploy
-- Backend legado (`server/`): tratar como não confiável até saneamento completo
+- Static frontend (`src/`): acceptable for deployment
+- Legacy backend (`server/`): treat as untrusted until fully remediated
