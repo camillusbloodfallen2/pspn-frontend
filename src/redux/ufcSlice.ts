@@ -1,14 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {
-  createUFCRound,
-  enterUFCRound,
-  finishUFCRound,
-  getUFCRound,
-  getUFCRounds,
-  isAdmin,
-} from "../helper/contract/ufcBet";
 import { UFCRound } from "../interfaces/UFCBetType";
-import { approveToken } from "../helper/contract";
 import { ContractConfig } from "../config/config";
 
 interface UFCState {
@@ -36,6 +27,7 @@ const initialState: UFCState = {
 export const getIsAdmin = createAsyncThunk(
   "ufc/getIsAdmin",
   async ({ account }: { account: string }) => {
+    const { isAdmin } = await import("../helper/contract/ufcBet");
     const admin = await isAdmin(account);
     return admin;
   }
@@ -54,6 +46,7 @@ export const createRound = createAsyncThunk(
     closeAt: number;
     account: string;
   }) => {
+    const { createUFCRound } = await import("../helper/contract/ufcBet");
     await createUFCRound(player1, player2, closeAt, account);
   }
 );
@@ -61,6 +54,7 @@ export const createRound = createAsyncThunk(
 export const approveAction = createAsyncThunk(
   "ufc/approveAction",
   async ({ amount, account }: { amount: number; account: string }) => {
+    const { approveToken } = await import("../helper/contract");
     await approveToken(
       ContractConfig.UFCAddress,
       amount,
@@ -83,6 +77,7 @@ export const enterRound = createAsyncThunk(
     expectation: number;
     account: string;
   }) => {
+    const { enterUFCRound } = await import("../helper/contract/ufcBet");
     await enterUFCRound(roundId, amount, expectation, account);
   }
 );
@@ -98,11 +93,13 @@ export const finishRound = createAsyncThunk(
     result: number;
     account: string;
   }) => {
+    const { finishUFCRound } = await import("../helper/contract/ufcBet");
     await finishUFCRound(roundId, result, account);
   }
 );
 
 export const getRounds = createAsyncThunk("ufc/getRounds", async () => {
+  const { getUFCRounds } = await import("../helper/contract/ufcBet");
   const rounds = await getUFCRounds();
   return rounds;
 });
@@ -110,6 +107,7 @@ export const getRounds = createAsyncThunk("ufc/getRounds", async () => {
 export const getCurrentRound = createAsyncThunk(
   "ufc/getCurrentRound",
   async ({ roundId }: { roundId: number }) => {
+    const { getUFCRound } = await import("../helper/contract/ufcBet");
     const round = await getUFCRound(roundId);
     return round;
   }

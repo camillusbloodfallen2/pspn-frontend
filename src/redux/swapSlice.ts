@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ContractConfig } from "../config/config";
-import { approveToken } from "../helper/contract";
-import { estimateSwap, internalSwap } from "../helper/contract/internalSwap";
 
 interface SwapState {
   loadingInternalSwap: string;
@@ -36,6 +34,7 @@ export const getEstimatedSwapAmount = createAsyncThunk(
     amount: number;
     direction: boolean;
   }) => {
+    const { estimateSwap } = await import("../helper/contract/internalSwap");
     const estimatedAmount = direction
       ? await estimateSwap(from, to, amount)
       : await estimateSwap(to, from, amount);
@@ -56,6 +55,11 @@ export const handleInternalSwap = createAsyncThunk(
     amount: number;
     account: string;
   }) => {
+    const [{ approveToken }, { internalSwap }] = await Promise.all([
+      import("../helper/contract"),
+      import("../helper/contract/internalSwap"),
+    ]);
+
     await approveToken(
       from,
       amount,

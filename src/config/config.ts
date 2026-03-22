@@ -27,11 +27,11 @@ export const SwapTokens: SwapTokenType[] = [
   {
     name: "PSPN",
     address: ContractConfig.TokenAddress,
-    logo: "pspn.png",
+    logo: "pspn-96.png",
   },
   {
     name: "UFC",
     address: ContractConfig.UFCAddress,
-    logo: "ufc.png",
+    logo: "ufc-96.png",
   },
 ];

@@ -43,7 +43,7 @@ const MobileSideBar = ({
         type="button"
         onClick={() => toggleMobileSideBar(false)}
         className={clsx(
-          "absolute inset-0 bg-slate-950/70 backdrop-blur-sm transition",
+          "absolute inset-0 bg-slate-950/70 backdrop-blur-sm transition-opacity duration-200 motion-reduce:transition-none",
           showMobileSideBar ? "opacity-100" : "opacity-0"
         )}
         aria-label="Close navigation"
@@ -51,7 +51,7 @@ const MobileSideBar = ({
 
       <aside
         className={clsx(
-          "absolute left-0 top-0 flex h-full w-[min(24rem,86vw)] flex-col border-r border-[color:var(--app-border)] bg-[color:var(--app-panel-strong)] p-5 shadow-[0_20px_80px_rgba(2,8,23,0.45)] transition-transform duration-300",
+          "absolute left-0 top-0 flex h-full w-[min(24rem,86vw)] flex-col border-r border-[color:var(--app-border)] bg-[color:var(--app-panel-strong)] p-5 shadow-[0_20px_80px_rgba(2,8,23,0.45)] transition-transform duration-300 motion-reduce:transition-none",
           showMobileSideBar ? "translate-x-0" : "-translate-x-full"
         )}
       >
@@ -62,9 +62,13 @@ const MobileSideBar = ({
             className="flex items-center gap-3"
           >
             <img
-              src="/assets/main/logo.png"
+              src="/assets/main/logo-48.png"
               alt="PSPN"
+              decoding="async"
+              height={48}
+              loading="lazy"
               className="h-12 w-12 rounded-full object-cover"
+              width={48}
             />
               <div>
                 <div className="font-display text-lg font-semibold app-text">PSPN</div>
@@ -91,6 +95,7 @@ const MobileSideBar = ({
               type="button"
               onClick={() => toggleMobileSideBar(false)}
               className="app-chip inline-flex h-11 w-11 items-center justify-center rounded-2xl app-text"
+              aria-label="Close menu"
             >
               <CloseIcon className="h-5 w-5" />
             </button>
@@ -127,10 +132,10 @@ const MobileSideBar = ({
               isConnected ? () => disconnectWallet() : () => onConnectWallet()
             }
             className={clsx(
-              "mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold transition",
+              "mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold",
               isConnected
                 ? "app-panel app-text"
-                : "app-primary-btn"
+                : "app-primary-btn transition-transform duration-150 motion-reduce:transition-none"
             )}
           >
             {isConnected ? (
@@ -152,7 +157,7 @@ const MobileSideBar = ({
                 to={menu.href[0]}
                 onClick={() => toggleMobileSideBar(false)}
                 className={clsx(
-                  "rounded-2xl px-4 py-3 text-sm font-medium transition",
+                  "rounded-2xl px-4 py-3 text-sm font-medium",
                   isActive
                     ? "app-nav-active"
                     : "app-chip app-nav-item hover:text-[color:var(--app-text)]"

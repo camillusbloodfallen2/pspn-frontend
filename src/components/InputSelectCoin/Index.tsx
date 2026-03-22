@@ -68,9 +68,13 @@ const InputSelectCoin: React.FC<InputSelectCoinProps> = ({
 
       <div className="app-panel mt-4 flex items-center gap-3 rounded-2xl px-3 py-2">
         <img
-          src={`/assets/tokens/${selectedTokenInfo?.logo ?? "pspn.png"}`}
+          src={`/assets/tokens/${selectedTokenInfo?.logo ?? "pspn-96.png"}`}
           alt={selectedTokenInfo?.name ?? "Token"}
+          decoding="async"
+          height={96}
+          loading="lazy"
           className="h-10 w-10 rounded-2xl object-cover"
+          width={96}
         />
         <div>
           <div className="app-text text-sm font-semibold">

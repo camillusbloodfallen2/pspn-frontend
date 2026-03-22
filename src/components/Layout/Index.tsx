@@ -1,7 +1,6 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import TopBar from "./TopBar";
 import useWallet from "../../hook/useWallet";
-import Web3 from "web3";
 import { ChainConfig } from "../../config/config";
 import { switchNetwork } from "../../helper/network";
 import { useDispatch } from "react-redux";
@@ -22,28 +21,22 @@ const LayoutIndex: React.FC<LayoutProps> = ({ children }) => {
   const [showMobileSideBar, setShowMobileSideBar] = useState(false);
 
   useEffect(() => {
-    if (wallet) {
-      const checkNetwork = () => {
-        if (!wallet.chains?.[0]) {
-          return;
-        }
+    const currentChain = wallet?.chains?.[0]?.id;
 
-        const web3 = new Web3(wallet.provider);
-        (window as any).provider = web3;
-
-        if (
-          wallet.chains[0].id !== `0x${ChainConfig.chainIdHex.toString(16)}`
-        ) {
-          disconnectWallet();
-          switchNetwork(wallet.provider)
-            .then(() => connectWallet())
-            .catch(() => disconnectWallet());
-        }
-      };
-
-      checkNetwork();
+    if (!wallet || !currentChain) {
+      return;
     }
-  }, [wallet, disconnectWallet, connectWallet]);
+
+    if (currentChain === `0x${ChainConfig.chainId.toString(16)}`) {
+      return;
+    }
+
+    switchNetwork(wallet.provider).then((switched) => {
+      if (!switched) {
+        void disconnectWallet();
+      }
+    });
+  }, [wallet, disconnectWallet]);
 
   useEffect(() => {
     if (account) {

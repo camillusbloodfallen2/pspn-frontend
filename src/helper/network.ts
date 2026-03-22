@@ -1,13 +1,16 @@
-import Web3, { EIP1193Provider, Web3APISpec } from "web3";
 import { ChainConfig } from "../config/config";
 
-export const switchNetwork = async (provider: EIP1193Provider<Web3APISpec>) => {
-  // const currentChainId = await getNetworkId();
-  const chainId = ChainConfig.chainId;
+type WalletProvider = {
+  request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
+};
+
+const chainIdHex = `0x${ChainConfig.chainId.toString(16)}`;
+
+export const switchNetwork = async (provider: WalletProvider) => {
   try {
     await provider.request({
       method: "wallet_switchEthereumChain",
-      params: [{ chainId: Web3.utils.toHex(chainId) }],
+      params: [{ chainId: chainIdHex }],
     });
 
     return true;
@@ -26,12 +29,12 @@ export const switchNetwork = async (provider: EIP1193Provider<Web3APISpec>) => {
   }
 };
 
-export const addNetwork = async (provider: EIP1193Provider<Web3APISpec>) => {
+export const addNetwork = async (provider: WalletProvider) => {
   await provider.request({
     method: "wallet_addEthereumChain",
     params: [
       {
-        chainId: Web3.utils.toHex(ChainConfig.chainId),
+        chainId: chainIdHex,
         chainName: ChainConfig.chainName,
         nativeCurrency: {
           name: "PulseChain",

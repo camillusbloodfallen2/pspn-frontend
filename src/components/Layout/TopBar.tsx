@@ -43,9 +43,13 @@ const TopBar: React.FC<{ showMobileSideBar: () => void }> = ({
           className="app-chip flex min-w-0 items-center gap-3 rounded-full px-3 py-2"
         >
           <img
-            src="/assets/main/logo.png"
+            src="/assets/main/logo-36.png"
+            srcSet="/assets/main/logo-72.png 2x"
             alt="PSPN"
+            decoding="async"
+            height={36}
             className="h-9 w-9 rounded-full object-cover"
+            width={36}
           />
           <div className="min-w-0">
             <div className="font-display text-sm font-semibold tracking-[0.2em] app-text">
@@ -61,7 +65,7 @@ const TopBar: React.FC<{ showMobileSideBar: () => void }> = ({
               key={menu.label}
               to={menu.href[0]}
               className={clsx(
-                "rounded-full px-4 py-2 text-sm font-medium transition",
+                "rounded-full px-4 py-2 text-sm font-medium",
                 menu.href.some((href) => href === currentRoute.pathname)
                   ? "app-nav-active"
                   : "app-nav-item hover:bg-[color:var(--app-chip)] hover:text-[color:var(--app-text)]"
@@ -119,11 +123,12 @@ const TopBar: React.FC<{ showMobileSideBar: () => void }> = ({
               isConnected ? () => disconnectWallet() : () => connectWallet()
             }
             className={clsx(
-              "inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition",
+              "inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold",
               isConnected
                 ? "app-chip app-text"
-                : "app-primary-btn hover:-translate-y-0.5"
+                : "app-primary-btn transition-transform duration-150 hover:-translate-y-0.5 motion-reduce:transition-none"
             )}
+            aria-label={isConnected ? "Disconnect wallet" : "Start earning"}
           >
             {isConnected ? (
               <PowerIcon className="h-4 w-4" />

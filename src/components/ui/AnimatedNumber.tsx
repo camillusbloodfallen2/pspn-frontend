@@ -17,6 +17,22 @@ const AnimatedNumber: React.FC<AnimatedNumberProps> = ({
   const previousValue = useRef(value);
 
   useEffect(() => {
+    if (Math.abs(previousValue.current - value) < 0.0001) {
+      setDisplayValue(value);
+      previousValue.current = value;
+      return;
+    }
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (reduceMotion || duration <= 0) {
+      setDisplayValue(value);
+      previousValue.current = value;
+      return;
+    }
+
     const startValue = previousValue.current;
     const startTime = performance.now();
     let frameId = 0;
@@ -31,6 +47,7 @@ const AnimatedNumber: React.FC<AnimatedNumberProps> = ({
       if (progress < 1) {
         frameId = window.requestAnimationFrame(tick);
       } else {
+        setDisplayValue(value);
         previousValue.current = value;
       }
     };

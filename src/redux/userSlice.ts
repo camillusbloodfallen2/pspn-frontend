@@ -1,12 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ContractConfig } from "../config/config";
-import { getTokenBalance } from "../helper/contract";
 import { UserYieldInfoType } from "../interfaces/UserYieldInfoType";
-import {
-  claimYield,
-  getDailyYieldRate,
-  getUserYieldInfo,
-} from "../helper/contract/ufc";
 
 interface UserState {
   user: string;
@@ -43,6 +37,7 @@ const initialState: UserState = {
 export const getTokenBalanceByUser = createAsyncThunk(
   "user/getTokenBalanceByUser",
   async ({ account }: { account: string }) => {
+    const { getTokenBalance } = await import("../helper/contract");
     const token = await getTokenBalance(ContractConfig.TokenAddress, account);
     const ufc = await getTokenBalance(ContractConfig.UFCAddress, account);
     return { token, ufc };
@@ -52,12 +47,14 @@ export const getTokenBalanceByUser = createAsyncThunk(
 export const getYieldInfo = createAsyncThunk(
   "user/getDailyYieldInfo",
   async ({ account }: { account: string }) => {
+    const { getUserYieldInfo } = await import("../helper/contract/ufc");
     const info = await getUserYieldInfo(account);
     return info;
   }
 );
 
 export const getYieldRate = createAsyncThunk("user/getYieldRate", async () => {
+  const { getDailyYieldRate } = await import("../helper/contract/ufc");
   const rate = await getDailyYieldRate();
   return rate;
 });
@@ -65,6 +62,7 @@ export const getYieldRate = createAsyncThunk("user/getYieldRate", async () => {
 export const handleClaimYield = createAsyncThunk(
   "user/handleClaimYield",
   async ({ account }: { account: string }) => {
+    const { claimYield } = await import("../helper/contract/ufc");
     await claimYield(account);
   }
 );

@@ -16,7 +16,7 @@
     --app-text-muted: rgba(237, 242, 247, 0.86);
     --app-text-subtle: rgba(161, 170, 188, 0.96);
     --app-chip: rgba(255, 255, 255, 0.055);
-    --app-shadow: 0 30px 100px rgba(3, 5, 12, 0.42);
+    --app-shadow: 0 24px 72px rgba(3, 5, 12, 0.34);
     --app-accent: #00ff85;
     --app-accent-soft: rgba(0, 255, 133, 0.14);
     --app-accent-border: rgba(0, 255, 133, 0.28);
@@ -69,7 +69,7 @@
     --app-text-muted: rgba(11, 18, 32, 0.86);
     --app-text-subtle: rgba(51, 65, 85, 0.94);
     --app-chip: rgba(255, 255, 255, 0.92);
-    --app-shadow: 0 28px 80px rgba(71, 85, 105, 0.14);
+    --app-shadow: 0 22px 60px rgba(71, 85, 105, 0.12);
     --app-accent: #008f57;
     --app-accent-soft: rgba(0, 143, 87, 0.11);
     --app-accent-border: rgba(0, 143, 87, 0.22);
@@ -137,32 +137,32 @@
     background: var(--app-surface);
     border: 1px solid var(--app-border);
     box-shadow: var(--app-shadow);
-    backdrop-filter: blur(24px);
+    backdrop-filter: blur(18px);
   }
 
   .app-card-strong {
     background: var(--app-surface-strong);
     border: 1px solid var(--app-border);
     box-shadow: var(--app-shadow);
-    backdrop-filter: blur(24px);
+    backdrop-filter: blur(18px);
   }
 
   .app-panel {
     background: var(--app-panel);
     border: 1px solid var(--app-border-soft);
-    backdrop-filter: blur(18px);
+    backdrop-filter: blur(12px);
   }
 
   .app-panel-strong {
     background: var(--app-panel-strong);
     border: 1px solid var(--app-border-soft);
-    backdrop-filter: blur(18px);
+    backdrop-filter: blur(12px);
   }
 
   .app-chip {
     background: var(--app-chip);
     border: 1px solid var(--app-border);
-    backdrop-filter: blur(18px);
+    backdrop-filter: blur(12px);
   }
 
   .app-nav-item {
@@ -219,7 +219,7 @@
     background: var(--app-chip);
     border: 1px solid var(--app-border);
     color: var(--app-text);
-    backdrop-filter: blur(18px);
+    backdrop-filter: blur(12px);
   }
 
   .app-live-pill {
@@ -244,7 +244,12 @@
     background: var(--app-panel);
     border: 1px solid var(--app-border);
     color: var(--app-text);
-    backdrop-filter: blur(18px);
+    backdrop-filter: blur(12px);
+  }
+
+  .deferred-landing-sections {
+    content-visibility: auto;
+    contain-intrinsic-size: 1800px;
   }
 
   .app-field::placeholder {

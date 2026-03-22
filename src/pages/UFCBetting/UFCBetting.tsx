@@ -430,9 +430,13 @@ const UFCBetting: React.FC = () => {
             <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center">
               <div className="app-chip flex min-h-14 flex-1 items-center rounded-2xl px-4">
                 <img
-                  src="/assets/tokens/ufc.png"
+                  src="/assets/tokens/ufc-96.png"
                   alt="UFC token"
+                  decoding="async"
+                  height={96}
+                  loading="lazy"
                   className="mr-3 h-8 w-8 rounded-xl object-cover"
+                  width={96}
                 />
                 <input
                   value={betAmount}
