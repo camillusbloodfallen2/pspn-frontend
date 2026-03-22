@@ -1,0 +1,77 @@
+{
+  "name": "pspn-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@primno/dpapi": "^2.0.1",
+    "@reduxjs/toolkit": "^2.5.1",
+    "@sendgrid/mail": "^8.1.6",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.126",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@web3-onboard/coinbase": "^2.4.2",
+    "@web3-onboard/injected-wallets": "^2.11.3",
+    "@web3-onboard/react": "^2.11.0",
+    "@web3-onboard/trust": "^2.1.2",
+    "axios": "^1.7.9",
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^12.8.0",
+    "cloudinary": "^2.9.0",
+    "clsx": "^2.1.1",
+    "cookie-parser": "^1.4.7",
+    "ethereum-blockies": "^0.1.1",
+    "ethers": "^6.13.5",
+    "express-fileupload": "^1.5.2",
+    "gsap": "^3.12.7",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.3.0",
+    "node-machine-id": "^1.1.12",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.1.5",
+    "react-scripts": "5.0.1",
+    "react-spring": "^9.7.5",
+    "socket.io-client": "^4.8.3",
+    "typescript": "^4.9.5",
+    "validator": "^13.15.26",
+    "web-vitals": "^2.1.4",
+    "web3": "^4.16.0"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@craco/craco": "^7.1.0",
+    "@types/ethereum-blockies": "^0.1.2",
+    "ajv": "^7.2.4",
+    "autoprefixer": "^10.4.27",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^3.4.19"
+  }
+}
